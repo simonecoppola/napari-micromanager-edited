@@ -40,6 +40,8 @@ class CoreViewerLink(QObject):
             (self._mmc.events.continuousSequenceAcquisitionStarted, self._start_live),
             (self._mmc.events.sequenceAcquisitionStopped, self._stop_live),
             (self._mmc.events.exposureChanged, self._restart_live),
+            (self._mmc.events.configSet, self._restart_live_simone), # simone
+            # (self._mmc.events.propertiesChanged, self._restart_live_simone)  # simone
         ]
         for signal, slot in self._connections:
             signal.connect(slot)
@@ -72,6 +74,14 @@ class CoreViewerLink(QObject):
         if self._live_timer_id:
             self._mmc.stopSequenceAcquisition()
             self._mmc.startContinuousSequenceAcquisition()
+
+    def _restart_live_simone(self):
+        print("hi!!")
+        if self._live_timer_id:
+            print("HellO!")
+            self._stop_live()
+            self._start_live()
+            self._mmc.setShutterOpen(True)
 
     @ensure_main_thread  # type: ignore [misc]
     def _update_viewer(self, data: np.ndarray | None = None) -> None:

@@ -105,7 +105,7 @@ class MicroManagerToolbar(QMainWindow):
         toolbar_items = [
             ConfigToolBar(self),
             ChannelsToolBar(self),
-            ObjectivesToolBar(self),
+            # ObjectivesToolBar(self),
             None,
             ShuttersToolBar(self),
             SnapLiveToolBar(self),
